@@ -17,6 +17,18 @@ const App = () => {
   }, [contacts]);
 
   const addContact = ({ name, number }) => {
+    const normalizedName = name.toLowerCase();
+    const isDuplicate = contacts.some(
+      contact =>
+        contact.name.toLowerCase() === normalizedName ||
+        contact.number === number
+    );
+
+    if (isDuplicate) {
+      alert('Kontakt o podanym imieniu lub numerze już istnieje!');
+      return;
+    }
+
     const newContact = { id: nanoid(), name, number };
     setContacts(prev => [...prev, newContact]);
   };

@@ -4,8 +4,16 @@ import styles from './ContactForm.module.css';
 
 const ContactForm = ({ onAddContact }) => {
   const validationSchema = Yup.object({
-    name: Yup.string().min(3).max(50).required('Name is required'),
-    number: Yup.string().min(3).max(50).required('Number is required'),
+    name: Yup.string()
+      .matches(/^[A-Za-z\s]+$/, 'Imię może zawierać tylko litery i spacje')
+      .min(3, 'Za krótkie!')
+      .max(50, 'Za długie!')
+      .required('Imię jest wymagane'),
+    number: Yup.string()
+      .matches(/^[0-9]+$/, 'Numer telefonu może zawierać tylko cyfry')
+      .min(6, 'Numer telefonu jest za krótki')
+      .max(20, 'Numer telefonu jest za długi')
+      .required('Numer telefonu jest wymagany'),
   });
 
   return (
